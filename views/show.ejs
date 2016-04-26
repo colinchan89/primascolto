@@ -1,0 +1,34 @@
+<div class="show-container">
+	<h2><%= event.title %></h2>
+	<h4>Date & Time: <%= event.start_time %></h4>
+	<h4>Venue: <%= event.venue_name %></h4>
+	<h4>Location: <%= event.city %>, <%= event.region %>, <%= event.country_abbr %></h4>
+	<h4>Performers:
+		<% if(event.performers){ %>
+			<% if(event.performers.performer.length > 1){ %>
+				<% event.performers.performer.forEach(function(n){ %>
+				 <li><%= n.name %></li>
+			<% })} else { %>
+				<li><%= event.performers.performer.name %></li>
+		<% }} else{ %> No Listed Performers
+		<% } %>
+	</h4>
+	<h5>Price: <%= event.price %></h5>
+	<% if(event.links) { %>
+		<h5><a href="<%= event.links.link[0].url %>">Tickets</a></h5>
+	<% } else { %>
+		<h5>No Online Ticket Source</h5>
+	<% } %>
+<div>
+<!-- <button type="submit" class="btn btn-info btn-md" id="bookmark">Bookmark This Show</button><br><br> -->
+<footer>
+<% if(event.performers && songId){ %>
+	<iframe width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/<%= songId %>&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+	<iframe width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/<%= songId2 %>&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+	<iframe width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/<%= songId3 %>&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+	<iframe width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/<%= songId4 %>&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+	<iframe width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/<%= songId5 %>&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+<% } else { %>
+	<h5> Unable To Generate Song For This Performer <h5>
+<% } %>
+</footer>

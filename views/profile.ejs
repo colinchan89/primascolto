@@ -1,0 +1,30 @@
+<img src="http://i.imgur.com/Ubw2cGD.jpg">
+
+<div class="profile-container">
+  <h2>Welcome <%= user.local.name || user.facebook.name %>!</h2>
+  <% if(user.facebook.id) { %>
+      <h6>Facebook User</h6>
+  <% } else { %>
+      <h6>Locally Stored User</h6>
+  <% } %>
+  <h6>Bookmarks: <a href="#">Link</a></h6>
+  <h6>id: <%= user._id %></h6>
+  <h6>email: <%= user.local.email || user.facebook.email %></h6>
+</div>
+
+
+<style>
+  body {
+    background-color: black;
+  }
+  img {
+    height: 100vh;
+    float: right;
+  }
+  .profile-container {
+    position: absolute;
+    text-align: left;
+    margin-top: 6%;
+    margin-left: 6%;
+  }
+</style>

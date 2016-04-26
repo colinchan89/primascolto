@@ -1,0 +1,72 @@
+<div class="container">
+    <h1 class="header">p r i m a s c o l t o</h1>
+    <h3 class="subheader">Everyone Remembers Their First</h3>
+    <h3 style="margin:5px 0 5px 0">Concert Finder</h3>
+    <div class="form-group">
+      <div class="col-centered">
+        <label for="location">Location</label>
+        <input type="text" class="form-control" id="location" placeholder="City or Zip">
+      </div><br>
+      <div class="col-centered">
+        <label for="radius">Search Radius (in miles)</label>
+        <input type="number" class="form-control" min="1" max="20" step="1" value="10" id="radius">
+      </div><br>
+      <div class="col-centered">
+        <select name="timespan" id="timespan">
+          <option value="today">Today</option>
+          <option value="This Week">This Week (within 7 days)</option>
+        </select>
+      </div>
+    </div>
+    <button id="showResults">Submit</button>
+    <ul class="event-results"></ul>
+</div>
+
+<script type="text/javascript">
+  //submit button
+  $('#showResults').click(function(e){
+    //empty the list in case of additional request
+    $('.event-results').empty()
+    //set variable for api call uri
+    var query = '/api/events/' + $('#location').val() + '/' + $('#radius').val() + '/' + $('#timespan').val()
+    $.ajax({
+			url: query,
+			method: 'GET',
+			success: function(data){
+        if(data.length == undefined){
+          $('.event-results').append('<li>Sorry no results found. Try Again!</li>')
+        }
+        data.forEach(function(e){
+          var date = e.start_time
+          console.log(date)
+          var eventSpan = '<a id="'+ e.$.id + '" class="show-details" target="_blank" href="/events/' + e.$.id + '" "><span class="event-name">' + e.title + '</span></a>'
+          var dateSpan = '<span class="event-date">' + e.start_time + '</span>'
+          var venueSpan = '<span class="event-venue">' + e.venue_name + '</span>'
+          var li = '<li>' + eventSpan + ' | ' + dateSpan + ' @ ' + venueSpan + '</li>'
+          $('.event-results').append(li)
+        })
+        $('.show-details').click(function(e){
+          $.ajax({
+            url: '/api/event/single/' + e.target.id + '/',
+            method: 'GET'
+          })
+        })
+      },
+    });
+  })
+  $('#location').keypress(function(e){
+    if(e.which == 13){//Enter key pressed
+      $('#showResults').click();//Trigger search button click event
+    }
+  });
+
+  //Googly analytics
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-72209118-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
